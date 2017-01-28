@@ -26,6 +26,8 @@ import six
 
 from gremlin_python.driver import serializer, request
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class GremlinServerError(Exception):
     pass

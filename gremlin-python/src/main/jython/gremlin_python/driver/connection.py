@@ -22,6 +22,8 @@ from six.moves import queue
 
 from gremlin_python.driver import resultset
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class Connection:
 

@@ -23,6 +23,8 @@ except ImportError:
 
 from gremlin_python.structure.io import graphson
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class Processor:
     """Base class for OpProcessor serialization system."""

@@ -18,6 +18,8 @@ under the License.
 """
 import collections
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 RequestMessage = collections.namedtuple(
     'RequestMessage', ['processor', 'op', 'args'])

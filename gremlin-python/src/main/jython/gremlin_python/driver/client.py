@@ -34,6 +34,8 @@ except ImportError:
     def cpu_count():
         return None
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class Client:
 

@@ -19,6 +19,8 @@ under the License.
 import abc
 import six
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 @six.add_metaclass(abc.ABCMeta)
 class AbstractBaseTransport:

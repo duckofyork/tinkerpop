@@ -21,6 +21,8 @@ from tornado import websocket
 
 from gremlin_python.driver.transport import AbstractBaseTransport
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class TornadoTransport(AbstractBaseTransport):
 

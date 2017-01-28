@@ -18,6 +18,8 @@ under the License.
 """
 from concurrent.futures import Future
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class ResultSet:
 

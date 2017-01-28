@@ -22,6 +22,8 @@ from gremlin_python.driver import client
 from gremlin_python.driver.remote_connection import (
     RemoteConnection, RemoteTraversal, RemoteTraversalSideEffects)
 
+__author__ = 'David M. Brown (davebshow@gmail.com)'
+
 
 class DriverRemoteConnection(RemoteConnection):
 
