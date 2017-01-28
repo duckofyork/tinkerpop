@@ -77,6 +77,7 @@ class RemoteTraversalSideEffects(traversal.TraversalSideEffects):
         return self._keys
 
     def get(self, key):
+
         if not self._side_effects.get(key):
             if not self._closed:
                 message = request.RequestMessage(
@@ -101,17 +102,15 @@ class RemoteTraversalSideEffects(traversal.TraversalSideEffects):
         return results
 
     def _aggregate_results(self, result_set):
-        # Need to double check how all this works
-        aggregates = {'list': [], 'set': set(), 'map': {}, 'bulkset': {}}
+        aggregates = {'list': [], 'set': set(), 'map': {}, 'bulkset': {},
+                      'none': None}
         results = None
         for msg in result_set:
             if results is None:
-                aggregate_to = result_set._aggregate_to
-                if aggregate_to:
-                    results = aggregates.get(aggregate_to, [])
+                aggregate_to = result_set.aggregate_to
+                results = aggregates.get(aggregate_to, [])
             # on first message, get the right result data structure
             # if there is no update to a structure, then the item is the result
-            # not really sure about this...
             if results is None:
                 results = msg[0]
             # updating a map is different than a list or a set

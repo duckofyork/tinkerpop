@@ -63,7 +63,8 @@ class Connection:
                 future.set_exception(e)
             else:
                 # Start receive task
-                self._executor.submit(self._receive)
+                done = self._executor.submit(self._receive)
+                result_set.done = done
                 future.set_result(result_set)
 
         future_write.add_done_callback(cb)

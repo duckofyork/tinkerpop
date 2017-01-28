@@ -20,10 +20,10 @@ from concurrent.futures import Future
 
 from gremlin_python.driver import client
 from gremlin_python.driver.remote_connection import (
-    RemoteTraversal, RemoteTraversalSideEffects)
+    RemoteConnection, RemoteTraversal, RemoteTraversalSideEffects)
 
 
-class DriverRemoteConnection:
+class DriverRemoteConnection(RemoteConnection):
 
     def __init__(self, url, traversal_source, protocol_factory=None,
                  transport_factory=None, pool_size=None, max_workers=None,
@@ -31,6 +31,8 @@ class DriverRemoteConnection:
         self._client = client.Client(url, traversal_source, protocol_factory,
                                      transport_factory, pool_size, max_workers,
                                      None, username, password)
+        self._url = self._client._url
+        self._traversal_source = self._client._traversal_source
 
     def close(self):
         self._client.close()

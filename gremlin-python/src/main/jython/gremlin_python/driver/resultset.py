@@ -24,8 +24,16 @@ class ResultSet:
     def __init__(self, stream, request_id):
         self._stream = stream
         self._request_id = request_id
-        self._done = Future()
+        self._done = None
         self._aggregate_to = None
+
+    @property
+    def aggregate_to(self):
+        return self._aggregate_to
+
+    @aggregate_to.setter
+    def aggregate_to(self, val):
+        self._aggregate_to = val
 
     @property
     def request_id(self):
@@ -51,11 +59,17 @@ class ResultSet:
     def done(self):
         return self._done
 
+    @done.setter
+    def done(self, future):
+        self._done = future
+
     def one(self):
-        if self.stream.empty() and self.done.done():
-            return
-        result = self.stream.get()
-        return result
+        while not self.done.done():
+            if not self.stream.empty():
+                return self.stream.get_nowait()
+        if not self.stream.empty():
+            return self.stream.get_nowait()
+        return self.done.result()
 
     def all(self):
         future = Future()

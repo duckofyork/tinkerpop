@@ -27,6 +27,10 @@ import six
 from gremlin_python.driver import serializer, request
 
 
+class GremlinServerError(Exception):
+    pass
+
+
 @six.add_metaclass(abc.ABCMeta)
 class AbstractBaseProtocol:
 
@@ -66,7 +70,7 @@ class GremlinServerWSProtocol(AbstractBaseProtocol):
         result_set = results_dict[request_id]
         status_code = data['status']['code']
         aggregate_to = data['result']['meta'].get('aggregateTo', 'list')
-        result_set._aggregate_to = aggregate_to
+        result_set.aggregate_to = aggregate_to
         if status_code == 407:
             auth = b''.join([b'\x00', self._username.encode('utf-8'),
                              b'\x00', self._password.encode('utf-8')])
@@ -77,7 +81,7 @@ class GremlinServerWSProtocol(AbstractBaseProtocol):
             data = self._transport.read()
             self.data_received(data, results_dict)
         elif status_code == 204:
-            result_set.done.set_result(None)
+            result_set.stream.put_nowait([])
             del results_dict[request_id]
         elif status_code in [200, 206]:
             results = []
@@ -89,10 +93,9 @@ class GremlinServerWSProtocol(AbstractBaseProtocol):
                 data = self._transport.read()
                 self.data_received(data, results_dict)
             else:
-                result_set.done.set_result(None)
+                # result_set.done.set_result(None)
                 del results_dict[request_id]
         else:
-            result_set.stream.put_nowait(GremlinServerError(
-                "{0}: {1}".format(status_code, data["status"]["message"])))
-            result_set.done.set_result(None)
             del results_dict[request_id]
+            raise GremlinServerError(
+                "{0}: {1}".format(status_code, data["status"]["message"]))
