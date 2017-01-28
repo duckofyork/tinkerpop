@@ -181,8 +181,25 @@ class TestGraphSONWriter(TestCase):
         assert """true""" == self.graphson_writer.writeObject(True)
 
     def test_P(self):
-        assert """{"@type":"g:P","@value":{"predicate":"and","value":[{"@type":"g:P","@value":{"predicate":"or","value":[{"@type":"g:P","@value":{"predicate":"lt","value":"b"}},{"@type":"g:P","@value":{"predicate":"gt","value":"c"}}]}},{"@type":"g:P","@value":{"predicate":"neq","value":"d"}}]}}""" == self.graphson_writer.writeObject(
-            P.lt("b").or_(P.gt("c")).and_(P.neq("d")))
+        result = {'@type': 'g:P',
+                  '@value': {
+                     'predicate': 'and',
+                     'value': [{
+                        '@type': 'g:P',
+                        '@value': {
+                            'predicate': 'or',
+                            'value': [{
+                                '@type': 'g:P',
+                                '@value': {'predicate': 'lt', 'value': 'b'}
+                            },
+                            {'@type': 'g:P', '@value': {'predicate': 'gt', 'value': 'c'}}
+                            ]
+                        }
+                    },
+                    {'@type': 'g:P', '@value': {'predicate': 'neq', 'value': 'd'}}]}}
+
+        assert  result == json.loads(
+            self.graphson_writer.writeObject(P.lt("b").or_(P.gt("c")).and_(P.neq("d"))))
 
     def test_strategies(self):
         # we have a proxy model for now given that we don't want to have to have g:XXX all registered on the Gremlin traversal machine (yet)
@@ -195,7 +212,7 @@ class TestGraphSONWriter(TestCase):
     def test_graph(self):
         assert {"@type": "g:Vertex",
                 "@value": {"id": {"@type": "g:Int64", "@value": 12}, "label": "person"}} == json.loads(
-            self.graphson_writer.writeObject(Vertex(12l, "person")))
+            self.graphson_writer.writeObject(Vertex(long(12), "person")))
         assert {"@type": "g:Edge", "@value": {"id": {"@type": "g:Int32", "@value": 7},
                                               "outV": {"@type": "g:Int32", "@value": 0},
                                               "outVLabel": "person",
