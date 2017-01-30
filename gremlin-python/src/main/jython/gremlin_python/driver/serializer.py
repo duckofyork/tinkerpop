@@ -43,8 +43,8 @@ class Processor:
         return op_method(args_)
 
 
-class GraphSON2MessageSerializer:
-    """Message serializer for GraphSONv2"""
+class GraphSON3MessageSerializer:
+    """Message serializer for GraphSONv3"""
 
     _graphson_reader = graphson.GraphSONReader()
 
@@ -106,7 +106,7 @@ class GraphSON2MessageSerializer:
             'args': args
         }
         return self.finalize_message(message, b"\x21",
-                                     b"application/vnd.gremlin-v2.0+json")
+                                     b"application/vnd.gremlin-v3.0+json")
 
     def finalize_message(self, message, mime_len, mime_type):
         message = json.dumps(message)

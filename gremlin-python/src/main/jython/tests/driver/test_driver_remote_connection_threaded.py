@@ -56,7 +56,7 @@ def test_conn_in_threads(remote_connection):
 def _executor(q, conn):
     if not conn:
         conn = DriverRemoteConnection(
-            'ws://localhost:8182/gremlin', 'g', pool_size=4)
+            'ws://localhost:45940/gremlin', 'g', pool_size=4)
     try:
         g = Graph().traversal().withRemote(conn)
         future = g.V().promise()

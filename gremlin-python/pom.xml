@@ -314,6 +314,7 @@
                                         <param>aenum==1.4.5</param>
                                         <param>tornado==4.4.1</param>
                                         <param>six==1.10.0</param>
+                                        <param>futures==3.0.5</param>
                                     </libraries>
                                 </configuration>
                             </execution>
@@ -499,7 +500,7 @@ log.info("Gremlin Server with no authentication started on port 45940")
 def settingsSecure = Settings.read("${gremlin.server.dir}/conf/gremlin-server-modern-py.yaml")
 settingsSecure.graphs.graph = "${gremlin.server.dir}/conf/tinkergraph-empty.properties"
 settingsSecure.scriptEngines["gremlin-groovy"].scripts = ["${gremlin.server.dir}/scripts/generate-modern.groovy"]
-settingsSecure.port = 45941
+settingsSecure.port = 45940
 settingsSecure.authentication.className = "org.apache.tinkerpop.gremlin.server.auth.SimpleAuthenticator"
 settingsSecure.authentication.config = [credentialsDb: "${gremlin.server.dir}/conf/tinkergraph-credentials.properties"]
 
@@ -507,7 +508,7 @@ def serverSecure = new GremlinServer(settingsSecure)
 serverSecure.start().join()
 
 project.setContextValue("gremlin.py.server.secure", serverSecure)
-log.info("Gremlin Server with authentication started on port 45941")
+log.info("Gremlin Server with authentication started on port 45940")
 ]]>
                                         </script>
                                     </scripts>

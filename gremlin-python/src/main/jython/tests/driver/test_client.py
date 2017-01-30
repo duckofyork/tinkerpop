@@ -66,7 +66,7 @@ def test_client_async(client):
 
 def test_connection_share(client):
     # Overwrite fixture with pool_size=1 client
-    client = Client('ws://localhost:8182/gremlin', 'g', pool_size=1)
+    client = Client('ws://localhost:45940/gremlin', 'g', pool_size=1)
     g = Graph().traversal()
     t = g.V()
     message = RequestMessage('traversal', 'bytecode', {'gremlin': t.bytecode})

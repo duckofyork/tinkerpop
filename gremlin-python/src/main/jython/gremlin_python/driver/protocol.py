@@ -53,7 +53,7 @@ class GremlinServerWSProtocol(AbstractBaseProtocol):
 
     def __init__(self, message_serializer=None, username='', password=''):
         if message_serializer is None:
-            message_serializer = serializer.GraphSON2MessageSerializer()
+            message_serializer = serializer.GraphSON3MessageSerializer()
         self._message_serializer = message_serializer
         self._username = username
         self._password = password

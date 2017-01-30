@@ -26,11 +26,9 @@ class Traversal(object):
         self.graph = graph
         self.traversal_strategies = traversal_strategies
         self.bytecode = bytecode
-        self._side_effects = TraversalSideEffects()
+        self.side_effects = TraversalSideEffects()
         self.traversers = None
         self.last_traverser = None
-        # This is mainly to deal with futures for promise method
-        self.remote_results = None
     def __repr__(self):
         return str(self.bytecode)
     def __eq__(self, other):
@@ -410,3 +408,4 @@ class Binding(object):
         return hash(self.key) + hash(self.value)
     def __repr__(self):
         return "binding[" + self.key + "=" + str(self.value) + "]"
+
